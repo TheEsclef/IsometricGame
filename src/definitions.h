@@ -1,8 +1,12 @@
-#pragma once
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 900
 #define WINDOW_TITLE "Sigma Game"
 #define TARGET_FPS 60
 
 #define BACKGROUND_COLOR DARKGRAY
+#define NUM_ROWS 20
+#define NUM_COLS 20
+#define CELL_SIZE 32
+
+#define OFFSET_WIDTH ((SCREEN_WIDTH - NUM_COLS * CELL_SIZE) / 2)
+#define OFFSET_HEIGHT ((SCREEN_HEIGHT - NUM_ROWS * CELL_SIZE) / 2)
