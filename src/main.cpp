@@ -12,17 +12,18 @@ int main()
 
     Grid grid = Grid();
     grid.Print();
-
+    
     while (WindowShouldClose() == false)
     {
         // 1. Updates
-        grid.Draw();
-        
+
         // 2. Drawing
         BeginDrawing();
         ClearBackground(BACKGROUND_COLOR);
+
+        grid.Draw();
+        
         EndDrawing();
     }
-
     CloseWindow();
 }

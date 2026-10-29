@@ -36,11 +36,14 @@ void Grid::Draw()
     {
         for (int column = 0; column < NUM_COLS; column++)
         {
-            DrawRectangle(
-                OFFSET_WIDTH + column * CELL_SIZE + 1,
-                OFFSET_HEIGHT + row * CELL_SIZE + 1,
-                CELL_SIZE - 1,
-                CELL_SIZE - 1,
+            Image grass00 = LoadImage("sprites/grass00.png");
+            Texture2D texture = LoadTextureFromImage(grass00);
+            UnloadImage(grass00);
+
+            DrawTexture(
+                texture,
+                OFFSET_WIDTH + column * CELL_SIZE,
+                OFFSET_HEIGHT + row * CELL_SIZE,
                 WHITE);
         }
     }
