@@ -16,6 +16,9 @@ public:
     void Draw();
     Tile onTileHover();
     void DrawHoveredTile();
+    void GenerateMap();
+    void ShowHoveredTile();
+    void ChangeTile();
     void Print();
     int grid[NUM_ROWS][NUM_COLS];
 

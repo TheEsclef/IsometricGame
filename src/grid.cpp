@@ -10,6 +10,8 @@ Grid::Grid()
 
 void Grid::Initialize()
 {
+    srand(time(nullptr));
+
     for (int row = 0; row < NUM_ROWS; row++)
     {
         for (int column = 0; column < NUM_COLS; column++)
@@ -33,14 +35,16 @@ void ::Grid::Print()
 
 void Grid::Draw()
 {
+    srand(time(0));
     for (int row = 0; row < NUM_ROWS; row++)
     {
         for (int column = 0; column < NUM_COLS; column++)
         {
             int posX = SCREEN_WIDTH / 2 + (column - row) * (CELL_WIDTH / 2);
             int posY = SCREEN_HEIGHT / 4 + (column + row) * (CELL_HEIGHT / 2);
+            
             DrawTexture(
-                textures[0],
+                textures[grid[row][column]],
                 posX,
                 posY,
                 WHITE);
@@ -107,4 +111,41 @@ void Grid::DrawHoveredTile()
     DrawLineEx(right, bottom, 2, YELLOW);
     DrawLineEx(bottom, left, 2, YELLOW);
     DrawLineEx(left, top, 2, YELLOW);
+}
+
+void Grid::GenerateMap()
+{
+    for (int row = 0; row < NUM_ROWS; row++)
+    {
+        for (int column = 0; column < NUM_COLS; column++)
+        {
+            grid[row][column] = rand() % 4;
+        }
+    }
+}
+
+void Grid::ShowHoveredTile(){
+    Tile tile = onTileHover();
+
+    DrawText(TextFormat("Tile:\nX: %02i\nY: %02i", tile.row, tile.column), 20, 20, 40, RED);
+}
+
+void Grid::ChangeTile(){
+    Tile tile = onTileHover();
+
+    switch(GetKeyPressed()){
+        case KEY_ONE:
+            grid[tile.row][tile.column] = 0;
+            break;
+        case KEY_TWO:
+            grid[tile.row][tile.column] = 1;
+            break;
+        case KEY_THREE:
+            grid[tile.row][tile.column] = 2;
+            break;
+        case KEY_FOUR:
+            grid[tile.row][tile.column] = 3;
+            break;
+
+    }
 }

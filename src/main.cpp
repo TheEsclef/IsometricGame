@@ -11,16 +11,18 @@ int main()
     SetTargetFPS(TARGET_FPS);
 
     Grid grid = Grid();
-    grid.Print();
+    grid.GenerateMap();
 
     while (WindowShouldClose() == false)
     {
         // 1. Updates
+        grid.ChangeTile();
 
         // 2. Drawing
         BeginDrawing();
         ClearBackground(BACKGROUND_COLOR);
 
+        grid.ShowHoveredTile();
         grid.Draw();
         grid.DrawHoveredTile();
 
