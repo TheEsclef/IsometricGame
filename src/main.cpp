@@ -12,7 +12,7 @@ int main()
 
     Grid grid = Grid();
     grid.Print();
-    
+
     while (WindowShouldClose() == false)
     {
         // 1. Updates
@@ -22,7 +22,8 @@ int main()
         ClearBackground(BACKGROUND_COLOR);
 
         grid.Draw();
-        
+        grid.DrawHoveredTile();
+
         EndDrawing();
     }
     CloseWindow();
