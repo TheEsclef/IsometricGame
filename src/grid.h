@@ -19,8 +19,11 @@ public:
     void GenerateMap();
     void ShowHoveredTile();
     void ChangeTile();
+    void ResetMap();
+    void DrawObjects();
     void Print();
     int grid[NUM_ROWS][NUM_COLS];
+    int selectedSprite;
 
 private:
     std::vector<Texture2D> textures;

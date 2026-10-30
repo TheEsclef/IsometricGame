@@ -6,9 +6,10 @@ Grid::Grid()
 {
     Initialize();
     textures = InitializeTiles();
+    selectedSprite = 0;
 }
 
-void Grid::Initialize()
+void Grid::Initialize() 
 {
     srand(time(nullptr));
 
@@ -42,7 +43,7 @@ void Grid::Draw()
         {
             int posX = SCREEN_WIDTH / 2 + (column - row) * (CELL_WIDTH / 2);
             int posY = SCREEN_HEIGHT / 4 + (column + row) * (CELL_HEIGHT / 2);
-            
+
             DrawTexture(
                 textures[grid[row][column]],
                 posX,
@@ -50,6 +51,7 @@ void Grid::Draw()
                 WHITE);
         }
     }
+    DrawHoveredTile();
 }
 
 Tile Grid::onTileHover()
@@ -72,8 +74,7 @@ Tile Grid::onTileHover()
                 (float)posX,
                 (float)posY,
                 (float)CELL_WIDTH,
-                (float)CELL_HEIGHT
-            };
+                (float)CELL_HEIGHT};
 
             if (CheckCollisionPointRec(mouse, bounds))
             {
@@ -102,10 +103,10 @@ void Grid::DrawHoveredTile()
     int posY = SCREEN_HEIGHT / 4 +
                (tile.column + tile.row) * (CELL_HEIGHT / 2);
 
-    Vector2 top    = { posX + CELL_WIDTH / 2.0f, float(posY) };
-    Vector2 right  = { float(posX) + CELL_WIDTH, posY + CELL_HEIGHT / 2.0f };
-    Vector2 bottom = { float(posX) + CELL_WIDTH / 2.0f, float(posY) + CELL_HEIGHT };
-    Vector2 left   = { float(posX), posY + CELL_HEIGHT / 2.0f };
+    Vector2 top = {posX + CELL_WIDTH / 2.0f, float(posY)};
+    Vector2 right = {float(posX) + CELL_WIDTH, posY + CELL_HEIGHT / 2.0f};
+    Vector2 bottom = {float(posX) + CELL_WIDTH / 2.0f, float(posY) + CELL_HEIGHT};
+    Vector2 left = {float(posX), posY + CELL_HEIGHT / 2.0f};
 
     DrawLineEx(top, right, 2, YELLOW);
     DrawLineEx(right, bottom, 2, YELLOW);
@@ -124,28 +125,53 @@ void Grid::GenerateMap()
     }
 }
 
-void Grid::ShowHoveredTile(){
+void Grid::ShowHoveredTile()
+{
     Tile tile = onTileHover();
 
     DrawText(TextFormat("Tile:\nX: %02i\nY: %02i", tile.row, tile.column), 20, 20, 40, RED);
 }
 
-void Grid::ChangeTile(){
-    Tile tile = onTileHover();
-
-    switch(GetKeyPressed()){
-        case KEY_ONE:
-            grid[tile.row][tile.column] = 0;
-            break;
-        case KEY_TWO:
-            grid[tile.row][tile.column] = 1;
-            break;
-        case KEY_THREE:
-            grid[tile.row][tile.column] = 2;
-            break;
-        case KEY_FOUR:
-            grid[tile.row][tile.column] = 3;
-            break;
-
+void Grid::ChangeTile()
+{
+    switch (GetKeyPressed())
+    {
+    case KEY_UP:
+        selectedSprite++;
+        if(selectedSprite >= textures.size()){selectedSprite = textures.size() - 1;}
+        break;
+    case KEY_DOWN:
+        selectedSprite--;
+        if(selectedSprite < 0){selectedSprite = 0;}
+        break;
     }
+
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    {
+        Tile tile = onTileHover();
+
+        if (tile.row >= 0 && tile.row < NUM_ROWS &&
+            tile.column >= 0 && tile.column < NUM_COLS)
+        {
+            grid[tile.row][tile.column] = selectedSprite;
+        }
+    }
+}
+
+void Grid::ResetMap()
+{
+    if (IsKeyDown(KEY_R) == true)
+    {
+        for (int row = 0; row < NUM_ROWS; row++)
+        {
+            for (int column = 0; column < NUM_COLS; column++)
+            {
+                grid[row][column] = 0;
+            }
+        }
+    }
+}
+
+void Grid::DrawObjects(){
+    Tile tile = onTileHover();
 }

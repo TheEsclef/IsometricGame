@@ -17,14 +17,14 @@ int main()
     {
         // 1. Updates
         grid.ChangeTile();
+        grid.ResetMap();
 
         // 2. Drawing
         BeginDrawing();
         ClearBackground(BACKGROUND_COLOR);
-
+        
         grid.ShowHoveredTile();
         grid.Draw();
-        grid.DrawHoveredTile();
 
         EndDrawing();
     }
